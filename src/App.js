@@ -1,4 +1,4 @@
-import {
+import React, {
   useState,
   useRef
 } from "react"; 
@@ -8,30 +8,54 @@ function App() {
   const inputRef = useRef(null); 
   const resultRef = useRef(null); 
   const [result, setResult] = useState(0); 
- 
+
+  function getInputNumber() {
+    return Number(inputRef.current.value);
+  }
+  
   function plus(e) { 
     e.preventDefault(); 
-    setResult((result) => result + Number(inputRef.current.value)); 
+    const inputNumber = getInputNumber()
+    setResult((result) => result + inputNumber)
+    console.log('added')
+    resetInput(e)
   }; 
  
-  function minus(e) { 
-  	// Add the code for the minus function 
+  function minus(e) {
+    e.preventDefault();
+    const inputNumber = getInputNumber()
+    setResult((result) => result - inputNumber)
+   resetInput(e)
   };
  
-  function times(e) { 
-    // Add the code for the plus function 
+  function times(e) {
+    e.preventDefault();
+    const inputNumber = getInputNumber()
+    setResult((result) => result * inputNumber)
+    resetInput(e)
   }; 
  
-  function divide(e) { 
-    // Add the code for the divide function 
+  function divide(e) {
+    e.preventDefault();
+    if(result === 0){
+      alert("Cannot divide by 0")
+    }
+    const inputNumber = getInputNumber()
+    setResult((result) => result / inputNumber)
+    resetInput(e)
   };
  
-  function resetInput(e) { 
-    // Add the code for the resetInput function 
+  function resetInput(e) {
+    e.preventDefault();
+    if (inputRef.current) {
+      inputRef.current.value = null;
+    }
   }; 
  
-  function resetResult(e) { 
-  	// Add the code for the resetResult function 
+  function resetResult(e) {
+    e.preventDefault();
+    setResult((result) => 0);
+    resetInput(e)
   }; 
  
   return ( 
@@ -41,7 +65,7 @@ function App() {
       </div> 
       <form> 
         <p ref={resultRef}> 
-          {/* add the value of the current total */} 
+          {result} 
         </p> 
         <input
           pattern="[0-9]" 
@@ -50,16 +74,12 @@ function App() {
           placeholder="Type a number" 
         /> 
         <button onClick={plus}>add</button> 
-        <button onClick={plus}>add</button> 
-        <button onClick={plus}>add</button> 
-        <button onClick={plus}>add</button> 
-        <button onClick={plus}>add</button> 
-        <button onClick={plus}>add</button> 
-        {/* Add the subtract button */} 
-        {/* Add the multiply button */} 
-        {/* Add the divide button */} 
-        {/* Add the resetInput button */} 
-        {/* Add the resetResult button */} 
+        <button onClick={minus}>subtract</button> 
+        <button onClick={times}>multiply</button> 
+        <button onClick={divide}>divide</button> 
+        <button onClick={resetInput}>resetInput</button> 
+        <button onClick={resetResult}>resetResult</button> 
+
       </form> 
     </div> 
   ); 
